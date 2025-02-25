@@ -1,0 +1,149 @@
+# Fallout Plugin Configuration
+
+# General settings
+general:
+  # How often (in ticks) to check for players in radiation zones (20 ticks = 1 second)
+  check-interval: 20
+  # Whether to show debug messages
+  debug: false
+  # Maximum radiation level a player can have (100 = 100%)
+  max-radiation-level: 100
+
+# Radiation visual effects
+effects:
+  # Boss bar settings
+  boss-bar:
+    enabled: true
+    title: "&c☢ Radiation Level: {level}% ☢"
+    color: RED  # RED, GREEN, BLUE, PURPLE, PINK, WHITE, YELLOW
+    style: SOLID  # SOLID, SEGMENTED_6, SEGMENTED_10, SEGMENTED_12, SEGMENTED_20
+  
+  # Particle effects when player is in radiation zone
+  particles:
+    enabled: true
+    type: REDSTONE  # Minecraft particle type
+    color: GREEN  # Color for colorable particles
+    frequency: 10  # Particles per second
+  
+  # Sound effects
+  sounds:
+    # Sound when entering radiation zone
+    enter:
+      enabled: true
+      sound: BLOCK_BEACON_ACTIVATE
+      volume: 1.0
+      pitch: 1.0
+    # Sound when radiation damage is applied
+    damage:
+      enabled: true
+      sound: ENTITY_PLAYER_HURT
+      volume: 0.8
+      pitch: 1.2
+
+# Radiation damage settings
+damage:
+  # Whether radiation causes damage
+  enabled: true
+  # How often (in ticks) to apply damage
+  interval: 60
+  # Base damage amount per tick when at 100% radiation
+  base-amount: 2.0
+  # Extra effects to apply based on radiation level
+  effects:
+    50:  # Applied at 50% radiation or higher
+      - "HUNGER:1:10"  # Format: EFFECT_TYPE:AMPLIFIER:DURATION_SECONDS
+    75:  # Applied at 75% radiation or higher
+      - "WEAKNESS:1:10"
+      - "POISON:0:5"
+    90:  # Applied at 90% radiation or higher
+      - "WITHER:0:3"
+
+# Radiation sources configuration
+sources:
+  # Default values for new radiation sources
+  defaults:
+    radius: 20
+    strength: 50
+    power: 5
+  
+  # Whether radiation sources are shown with particles
+  show-particles: true
+  
+  # Which worlds radiation is enabled in
+  enabled-worlds:
+    - world
+    - world_nether
+    - world_the_end
+
+# Healing items configuration
+healing:
+  # Items that reduce radiation level when consumed
+  items:
+    rad-away:
+      material: HONEY_BOTTLE
+      custom-model-data: 1001
+      display-name: "&eRad-Away"
+      lore:
+        - "&7Removes &c15%&7 radiation"
+      amount: 15  # Radiation percentage to remove
+    radx:
+      material: POTION
+      custom-model-data: 1002
+      display-name: "&bRad-X"
+      lore:
+        - "&7Provides temporary radiation resistance"
+      resistance-amount: 50  # Percentage of radiation resistance
+      duration: 600  # Duration in seconds
+
+# Armor and equipment radiation resistance
+equipment:
+  # Enable built-in radiation resistance system
+  enabled: true
+  
+  # Vanilla armor materials and their resistance values (percentage)
+  vanilla:
+    LEATHER: 5
+    IRON: 10
+    GOLD: 15
+    DIAMOND: 20
+    NETHERITE: 30
+  
+  # Custom attributes
+  attributes:
+    # Attribute name for radiation resistance (used in MMOItems if available)
+    radiation-resistance: "RADIATION_RESISTANCE"
+    # Attribute name for radiation healing (used in MMOItems if available)
+    radiation-healing: "RADIATION_HEALING"
+
+# MMOItems integration
+mmoitems:
+  # Whether MMOItems integration is enabled (will auto-disable if MMOItems is not present)
+  enabled: true
+  
+  # The attribute ID in MMOItems for radiation resistance
+  resistance-attribute: "RADIATION_RESISTANCE"
+  
+  # The attribute ID in MMOItems for radiation healing
+  healing-attribute: "RADIATION_HEALING"
+  
+  # Custom MMOItems that can clear radiation
+  custom-healing-items:
+    enabled: true
+    # MMOItems type and ID of items that clear radiation
+    items:
+      - "CONSUMABLE:rad_away"
+      - "CONSUMABLE:rad_x"
+
+# Storage settings
+storage:
+  # Storage type: YAML or MYSQL
+  type: YAML
+  
+  # MySQL settings (if using MYSQL storage)
+  mysql:
+    host: localhost
+    port: 3306
+    database: fallout
+    username: root
+    password: password
+    table-prefix: fallout_ 

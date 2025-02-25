@@ -1,0 +1,21 @@
+name: Fallout
+version: '1.0-SNAPSHOT'
+main: com.ssquadteam.fallout.Fallout
+api-version: '1.20'
+softdepend: [MMOItems]
+description: A Fallout-style radiation system for Minecraft
+author: SSQuadTeam
+
+commands:
+  rad:
+    description: Main command for controlling radiation sources
+    usage: /rad <new|list|remove|info> [args]
+    permission: fallout.admin
+    
+permissions:
+  fallout.admin:
+    description: Allows access to all Fallout plugin commands
+    default: op
+  fallout.bypass:
+    description: Immunity to radiation effects
+    default: false 
